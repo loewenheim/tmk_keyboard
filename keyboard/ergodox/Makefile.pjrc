@@ -106,6 +106,9 @@ dvorak: all
 colemak: OPT_DEFS += -DKEYMAP_COLEMAK
 colemak: all
 
+neo: OPT_DEFS += -DKEYMAP_NEO
+neo: all
+
 workman: OPT_DEFS += -DKEYMAP_WORKMAN
 workman: all
 

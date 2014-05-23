@@ -79,6 +79,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "keymap_dvorak.h"
 #elif defined(KEYMAP_COLEMAK)
 #include "keymap_colemak.h"
+#elif defined(KEYMAP_NEO)
+#include "keymap_neo.h"
 #elif defined(KEYMAP_WORKMAN)
 #include "keymap_workman.h"
 #elif defined(KEYMAP_MICRO)
