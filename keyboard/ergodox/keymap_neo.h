@@ -199,7 +199,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           NO,  NO,  NO,  NO,  NO,
                                         NO,  NO,
                                            TRNS,
-                                 TRNS,  NO,TRNS,
+                                 TRNS, FN3,TRNS,
         // right hand
                NO,  NO,  NO,  NO,  NO,  NO,  NO,
                NO,  NO,KP_7,KP_8,KP_9,RBRC,MINS,
@@ -249,7 +249,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                NO,  NO,  NO,  NO,  NO,  NO,  NO,
               INS,VOLU, APP,  NO,  NO,  NO,  NO,
                   MUTE,MPRV,MPLY,MNXT,MSTP,  NO,
-               NO,VOLD,  NO,  NO,  NO,  NO,  NO,
+              FN4,VOLD,  NO,  NO,  NO,  NO,  NO,
                          NO,  NO,  NO,  NO,  NO,
           NO,  NO,
           NO,
