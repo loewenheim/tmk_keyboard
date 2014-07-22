@@ -145,7 +145,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                                 `--------------------'       `--------------------'
      */
 
-    KEYMAP( // FIXXME
+    KEYMAP(
         // left hand
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
         TRNS,   X,   V,   L,   C,   W,TRNS,
