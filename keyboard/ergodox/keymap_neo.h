@@ -266,11 +266,11 @@ enum function_id {
  * Fn action definition
  */
 static const uint16_t PROGMEM fn_actions[] = {
-    ACTION_DEFAULT_LAYER_SET(0),                    // FIXXME: FN0 - switch to Layer0
-    ACTION_LAYER_MOMENTARY(1),                      // FIXXME: FN1 - switch Layer1
-    ACTION_DEFAULT_LAYER_SET(2),                    // FIXXME: FN2 - switch to Layer2
-    ACTION_LAYER_MOMENTARY(3),                      // FIXXME: FN3 - toggle Layer3
-    ACTION_LAYER_MOMENTARY(4),                      // FIXXME: FN4 - toggle Layer4
+    ACTION_DEFAULT_LAYER_SET(0),                    // FN0 - switch to Layer0
+    ACTION_DEFAULT_LAYER_SET(1),                    // FN1 - switch to Layer1
+    ACTION_DEFAULT_LAYER_SET(2),                    // FN2 - switch to Layer2
+    ACTION_LAYER_MOMENTARY(3),                      // FN3 - toggle Layer3
+    ACTION_LAYER_MOMENTARY(4),                      // FN4 - toggle Layer4
     ACTION_FUNCTION(TEENSY_KEY),                    // FN5 - Teensy key
 };
 
