@@ -260,15 +260,18 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* id for user defined functions */
 enum function_id {
     TEENSY_KEY,
+    LAYER0,
+    LAYER1,
+    LAYER2,
 };
 
 /*
  * Fn action definition
  */
 static const uint16_t PROGMEM fn_actions[] = {
-    ACTION_DEFAULT_LAYER_SET(0),                    // FN0 - switch to Layer0
-    ACTION_DEFAULT_LAYER_SET(1),                    // FN1 - switch to Layer1
-    ACTION_DEFAULT_LAYER_SET(2),                    // FN2 - switch to Layer2
+    ACTION_FUNCTION(LAYER0),                        // FN0 - switch to Layer0
+    ACTION_FUNCTION(LAYER1),                        // FN1 - switch to Layer1
+    ACTION_FUNCTION(LAYER2),                        // FN2 - switch to Layer1
     ACTION_LAYER_MOMENTARY(3),                      // FN3 - toggle Layer3
     ACTION_LAYER_MOMENTARY(4),                      // FN4 - toggle Layer4
     ACTION_FUNCTION(TEENSY_KEY),                    // FN5 - Teensy key
@@ -285,6 +288,30 @@ void action_function(keyrecord_t *event, uint8_t id, uint8_t opt)
         _delay_ms(250);
         bootloader_jump(); // should not return
         print("not supported.\n");
+    } else if (id == LAYER0) {
+        // led off
+        ergodox_led_all_off();
+        // layer 0
+        ACTION_DEFAULT_LAYER_SET(0);
+
+    /*
+     * I should rewrite this using event->tap_count and a switch statement.
+     * That way I can switch to all 3 layers using one single key and put
+     * FN0 on all layers to return quickly.
+     */
+
+    } else if (id == LAYER1) {
+        // led 1 on
+        ergodox_led_all_off();
+        ergodox_right_led_1_on();
+        // layer 1
+        ACTION_DEFAULT_LAYER_SET(1);
+    } else if (id == LAYER2) {
+        // led 2 on
+        ergodox_led_all_off();
+        ergodox_right_led_2_on();
+        // layer 2
+        ACTION_DEFAULT_LAYER_SET(2);
     }
 }
 
