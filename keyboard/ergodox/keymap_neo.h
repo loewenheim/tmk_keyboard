@@ -216,13 +216,13 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * special keys
      *
      * ,--------------------------------------------------.           ,--------------------------------------------------.
-     * | Power  |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
+     * | Power  |      |      |      |      |      |Teensy|           |      |      |      |      |      |      |        |
      * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
      * |        |      |      |      |      |      |      |           | Ins  | Vol+ |  App |      |      |      |        |
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
      * |        |      |      |      |      |      |------|           |------| Mute | Last | Pl/Ps| Next | Stop |        |
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-     * |        |      |      |      |      |      |Teensy|           |      | Vol- |      |      |      |      |        |
+     * |        |      |      |      |      |      |  KVM |           |      | Vol- |      |      |      |      |        |
      * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
      *   |      |      |      |      |      |                                       |      |      |      |      |      |
      *   `----------------------------------'                                       `----------------------------------'
@@ -237,10 +237,10 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     KEYMAP(
         // left hand
-         PWR,  NO,  NO,  NO,  NO,  NO,  NO,
+         PWR,  NO,  NO,  NO,  NO,  NO, FN5,
           NO,  NO,  NO,  NO,  NO,  NO,  NO,
           NO,  NO,  NO,  NO,  NO,  NO,
-          NO,  NO,  NO,  NO,  NO,  NO, FN5,
+          NO,  NO,  NO,  NO,  NO,  NO, FN6,
           NO,  NO,  NO,  NO,  NO,
                                         NO,  NO,
                                              NO,
@@ -265,6 +265,10 @@ enum function_id {
     LAYER2,
 };
 
+enum macro_id {
+    KVM_SWITCH,
+};
+
 /*
  * Fn action definition
  */
@@ -275,6 +279,7 @@ static const uint16_t PROGMEM fn_actions[] = {
     ACTION_LAYER_MOMENTARY(3),                      // FN3 - toggle Layer3
     ACTION_LAYER_MOMENTARY(4),                      // FN4 - toggle Layer4
     ACTION_FUNCTION(TEENSY_KEY),                    // FN5 - Teensy key
+    ACTION_MACRO(KVM_SWITCH),                       // FN6 - KVM switch macro
 };
 
 void action_function(keyrecord_t *event, uint8_t id, uint8_t opt)
@@ -315,3 +320,14 @@ void action_function(keyrecord_t *event, uint8_t id, uint8_t opt)
     }
 }
 
+const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
+    keyevent_t event = record->event; // either that’s wrong or the stuff in the function function
+    tap_t tap = record->tap;
+
+    switch (id) {
+        case KVM_SWITCH:
+            return (event.pressed ?
+                    MACRO( T(LCTRL), T(LCTRL), T(RETURN)) : MACRO_NONE);
+            break;
+    }
+}
