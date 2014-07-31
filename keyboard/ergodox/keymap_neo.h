@@ -216,7 +216,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * special keys
      *
      * ,--------------------------------------------------.           ,--------------------------------------------------.
-     * | Power  |      |      |      |      |      |Teensy|           |      |      |      |      |      |      |        |
+     * | Power  |      |      |      |      |      |Teensy|           |      |      |      |      |      |      | Teensy |
      * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
      * |        |      |      |      |      |      |      |           | Ins  | Vol+ |  App |      |      |      |        |
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
@@ -246,7 +246,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                              NO,
                                    NO,  NO,  NO,
         // right hand
-               NO,  NO,  NO,  NO,  NO,  NO,  NO,
+               NO,  NO,  NO,  NO,  NO,  NO, FN5,
               INS,VOLU, APP,  NO,  NO,  NO,  NO,
                   MUTE,MPRV,MPLY,MNXT,MSTP,  NO,
               FN4,VOLD,  NO,  NO,  NO,  NO,  NO,
