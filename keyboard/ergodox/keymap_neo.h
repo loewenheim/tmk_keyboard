@@ -63,7 +63,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  LSFT,NUBS,LGUI,
         // right hand
              F14,   6,   7,   8,   9,   0, MINS,
-             FN1,   Y,   U,   I,   O,   P, LBRC,
+             FN5,   Y,   U,   I,   O,   P, LBRC,
                     H,   J,   K,   L,SCLN, QUOT,
              FN3,   N,   M,COMM, DOT,SLSH,  EQL,
                         F9, F10, F11, F12, RBRC,
@@ -110,7 +110,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   SPC, FN2,TRNS,
         // right hand
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-              FN0,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+              FN6,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
                   TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,RSFT,
                        TRNS,TRNS,TRNS,TRNS,RCTL,
@@ -157,7 +157,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  TRNS, FN2,TRNS,
         // right hand
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,SLSH,
-              FN0,   K,   H,   G,   F,   Q,MINS,
+              FN4,   K,   H,   G,   F,   Q,MINS,
                      S,   N,   R,   T,   D,   Z,
              TRNS,   B,   M,COMM, DOT,   J, GRV,
                        TRNS,TRNS,TRNS,TRNS, EQL,
@@ -237,16 +237,16 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     KEYMAP(
         // left hand
-         PWR,  NO,  NO,  NO,  NO,  NO, FN4,
+         PWR,  NO,  NO,  NO,  NO,  NO, FN0,
           NO,  NO,  NO,  NO,  NO,  NO,  NO,
           NO,  NO,  NO,  NO,  NO,  NO,
-          NO,  NO,  NO,  NO,  NO,  NO, FN5,
+          NO,  NO,  NO,  NO,  NO,  NO, FN1,
           NO,  NO,  NO,  NO,  NO,
                                         NO,  NO,
                                              NO,
                                    NO,  NO,  NO,
         // right hand
-               NO,  NO,  NO,  NO,  NO,  NO, FN4,
+               NO,  NO,  NO,  NO,  NO,  NO, FN0,
               INS,VOLU, APP,  NO,  NO,  NO,  NO,
                   MUTE,MPRV,MPLY,MNXT,MSTP,  NO,
               FN3,VOLD,  NO,  NO,  NO,  NO,  NO,
@@ -261,7 +261,8 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 enum function_id {
     TEENSY_KEY,
     LAYER0,
-    SWITCH_LAYER,
+    LAYER1,
+    LAYER2,
 };
 
 enum macro_id {
@@ -272,15 +273,16 @@ enum macro_id {
  * Fn action definition
  */
 static const uint16_t PROGMEM fn_actions[] = {
-    ACTION_DEFAULT_LAYER_SET(0),//FUNCTION(LAYER0),                        // FN0 - switch to Layer0
-    ACTION_DEFAULT_LAYER_SET(1),//FUNCTION(SWITCH_LAYER),                  // FN1 - switch Layers
+    ACTION_FUNCTION(TEENSY_KEY),                    // FN0 - Teensy key
+    ACTION_MACRO(KVM_SWITCH),                       // FN1 - KVM switch macro
     ACTION_LAYER_MOMENTARY(3),                      // FN2 - toggle Layer3
     ACTION_LAYER_MOMENTARY(4),                      // FN3 - toggle Layer4
-    ACTION_FUNCTION(TEENSY_KEY),                    // FN4 - Teensy key
-    ACTION_MACRO(KVM_SWITCH),                       // FN5 - KVM switch macro
+    ACTION_FUNCTION(LAYER0),                        // FN4 - switch to Layer0
+    ACTION_FUNCTION(LAYER1),                        // FN5 - switch to Layer1
+    ACTION_FUNCTION(LAYER2),                        // FN6 - switch to Layer2
 };
 
-void action_function(keyrecord_t *event, uint8_t id, uint8_t opt)
+void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
     print("action_function called\n");
     print("id  = "); phex(id); print("\n");
@@ -291,42 +293,30 @@ void action_function(keyrecord_t *event, uint8_t id, uint8_t opt)
         _delay_ms(250);
         bootloader_jump(); // should not return
         print("not supported.\n");
-    } else if (id == LAYER0) {
-        // led off
-        ergodox_led_all_off();
-        // layer 0
-        ACTION_DEFAULT_LAYER_SET(0);
-    } else if (id == SWITCH_LAYER) {
-        switch (event->tap.count) {
-            case 1:
-                // led 1 on
-                ergodox_led_all_off();
-                ergodox_right_led_2_on();
-                // layer 1
-                ACTION_DEFAULT_LAYER_SET(1);
-                break;
-            case 2:
-                // led 2 on
-                ergodox_led_all_off();
-                ergodox_right_led_3_on();
-                // layer 2
-                ACTION_DEFAULT_LAYER_SET(2);
-                break;
-            // case 3:
-            //     // led 3 on
-            //     ergodox_led_all_off();
-            //     ergodox_right_led_2_on();
-            //     ergodox_right_led_3_on();
-            //     // layer 3
-            //     ACTION_DEFAULT_LAYER_SET(3);
-            //     break;
+    } else if (record->event.pressed) {
+        if (id == LAYER0) {
+            // led off
+            ergodox_led_all_off();
+            // layer 0
+            layer_clear();
+        } else if (id == LAYER1) {
+            // led 2 on
+            ergodox_led_all_off();
+            ergodox_right_led_2_on();
+            // layer 1
+            layer_on(1);
+        } else if (id == LAYER2) {
+            // led 3 on
+            ergodox_led_all_off();
+            ergodox_right_led_3_on();
+            // layer 2
+            layer_on(2);
         }
     }
 }
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
     keyevent_t event = record->event; // either that’s wrong or the stuff in the function function
-    tap_t tap = record->tap;
 
     switch (id) {
         case KVM_SWITCH:
