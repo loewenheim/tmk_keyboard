@@ -316,12 +316,14 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
 }
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
-    keyevent_t event = record->event; // either that’s wrong or the stuff in the function function
+    keyevent_t event = record->event;
+
+    // doesn’t work – sends no control
 
     switch (id) {
         case KVM_SWITCH:
             return (event.pressed ?
-                    MACRO( T(LCTRL), T(LCTRL), W(500), T(RETURN)) : MACRO_NONE);
+                    MACRO( I(50), T(LCTRL), T(LCTRL), W(255), W(255), T(ENTER), END) : MACRO_NONE);
             break;
     }
 }
