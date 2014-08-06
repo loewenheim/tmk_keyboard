@@ -152,7 +152,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         TRNS,   U,   I,   A,   E,   O,
         NUBS,LBRC,SCLN,QUOT,   P,   Y,TRNS,
         TRNS,TRNS,TRNS,TRNS,TRNS,
-                                      TRNS,TRNS,
+                                      LSFT,TRNS,
                                            TRNS,
                                  TRNS, FN2,TRNS,
         // right hand
