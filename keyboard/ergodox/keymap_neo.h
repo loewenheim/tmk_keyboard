@@ -21,8 +21,13 @@
  * The general idea is to have three layers that can be toggled in order:
  *
  * – standard Neo2
+ *   (no led)
  * – gamer’s Neo2 (games friendlier modifier positioning, hardware Neo2 layer 4)
+ *   (middle led)
+ * – poor man’s QWERTZ ((partial) QWERTZ with Neo2 active on the host system)
+ *   (bottom led)
  * – poor man’s Neo2 ((partial) Neo2 with QWERTZ active on the host system)
+ *   (middle and bottom led)
  *
  */
 
@@ -38,7 +43,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
      * |  Del   |   U  |   I  |   A  |   E  |   O  |------|           |------|   S  |   N  |   R  |   T  |   D  |   Y    |
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-     * |  T1    |   Ü  |   Ö  |   Ä  |   P  |   Z  | RET  |           |  L4  |   B  |   M  |   ,  |   .  |   J  |  T2    |
+     * |  T1    |   Ü  |   Ö  |   Ä  |   P  |   Z  | RET  |           |  L5  |   B  |   M  |   ,  |   .  |   J  |  T2    |
      * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
      *   | Prnt |  F1  |  F2  |  F3  |  F4  |                                       |  F9  |  F10 |  F11 | F12  |  T3  |
      *   `----------------------------------'                                       `----------------------------------'
@@ -63,9 +68,9 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  LSFT,NUBS,LGUI,
         // right hand
              F14,   6,   7,   8,   9,   0, MINS,
-             FN5,   Y,   U,   I,   O,   P, LBRC,
+             FN1,   Y,   U,   I,   O,   P, LBRC,
                     H,   J,   K,   L,SCLN, QUOT,
-             FN3,   N,   M,COMM, DOT,SLSH,  EQL,
+             FN5,   N,   M,COMM, DOT,SLSH,  EQL,
                         F9, F10, F11, F12, RBRC,
           F7, F8,
         LCTL,
@@ -76,7 +81,12 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *
      * gamer’s Neo2
      *
-     * FIXXME: description
+     * This is mostly just the standard Layout for using Neo2. Sadly, some
+     * Applications (games, anyone?) cannot map the Shift key as a button.
+     * Therefor this layer moves it to the standard keyboard pinky location and
+     * puts a space bar in its stead. In addition, the PRINT and T3 keys on the
+     * bottom edges of the board become CTRL keys, again in their standard
+     * keyboard position below the SHIFTs.
      *
      * ,--------------------------------------------------.           ,--------------------------------------------------.
      * |  Esc   |   1  |   2  |   3  |   4  |   5  | F13  |           | F14  |   6  |   7  |   8  |   9  |   0  |   -    |
@@ -85,7 +95,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
      * |  Del   |   U  |   I  |   A  |   E  |   O  |------|           |------|   S  |   N  |   R  |   T  |   D  |   Y    |
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-     * |  LSft  |   Ü  |   Ö  |   Ä  |   P  |   Z  | RET  |           |  L4  |   B  |   M  |   ,  |   .  |   J  |  RSft  |
+     * |  LSft  |   Ü  |   Ö  |   Ä  |   P  |   Z  | RET  |           |  L5  |   B  |   M  |   ,  |   .  |   J  |  RSft  |
      * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
      *   | LCtrl|  F1  |  F2  |  F3  |  F4  |                                       |  F9  |  F10 |  F11 | F12  | RCtrl|
      *   `----------------------------------'                                       `----------------------------------'
@@ -93,7 +103,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                                        |  F5  |  F6  |       |  F7  |  F8  |
      *                                 ,------|------|------|       |------+------+------.
      *                                 |      |      | LAlt |       | RCtrl|      |      |
-     *                                 | Space|  L3  |------|       |------|  M3r | Space|
+     *                                 | Space|  L4  |------|       |------|  M3r | Space|
      *                                 |      |      | LGui |       | RGui |      |      |
      *                                 `--------------------'       `--------------------'
      */
@@ -107,10 +117,10 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         LCTL,TRNS,TRNS,TRNS,TRNS,
                                       TRNS,TRNS,
                                            TRNS,
-                                  SPC, FN2,TRNS,
+                                  SPC, FN4,TRNS,
         // right hand
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-              FN6,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+              FN2,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
                   TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,RSFT,
                        TRNS,TRNS,TRNS,TRNS,RCTL,
@@ -121,9 +131,66 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* Keymap 2:
      *
+     * Poor man’s QWERTZ
+     *
+     * This layer is designed for applications that really can‘t ever stand
+     * anything else than QWERT[ZY]. With Neo2 active as the OS’ keyboard
+     * layout, it builds a virtual QWERTZ on the board.
+     *
+     * ,--------------------------------------------------.           ,--------------------------------------------------.
+     * |  Esc   |   1  |   2  |   3  |   4  |   5  | F13  |           | F14  |   6  |   7  |   8  |   9  |   0  |   ß    |
+     * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
+     * |  Tab   |   Q  |   W  |   E  |   R  |   T  | BKSP |           |  L3  |   Z  |   U  |   I  |   O  |   P  |   Ü    |
+     * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+     * |  Del   |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |   Ö  |   Ä    |
+     * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+     * |  LSft  |   Y  |   X  |   C  |   V  |   B  | RET  |           |  L5  |   N  |   M  |   ,  |   .  |   -  | RSft   |
+     * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+     *   | LCtl |  F1  |  F2  |  F3  |  F4  |                                       |  F9  |  F10 |  F11 | F12  | RCtl |
+     *   `----------------------------------'                                       `----------------------------------'
+     *                                        ,-------------.       ,-------------.
+     *                                        |  F5  |  F6  |       |  F7  |  F8  |
+     *                                 ,------|------|------|       |------+------+------.
+     *                                 |      |      | LAlt |       | RCtrl|      |      |
+     *                                 | Space|  L4  |------|       |------|  M3r | Space|
+     *                                 |      |      | LGui |       | RGui |      |      |
+     *                                 `--------------------'       `--------------------'
+     */
+
+    KEYMAP(
+        // left hand
+        ESC,   1,   2,   3,   4,   5,  F13,
+        TAB,   P,   T,   F,   K,   L, BSPC,
+        DEL,   D,   H,SCLN,   O,   I,
+        LSFT,QUOT,  Q,   R,   W,   N,  ENT,
+        LCTL, F1,  F2,  F3,  F4,
+                                        F5,  F6,
+                                           LALT,
+                                  SPC, FN4,LGUI,
+        // right hand
+             F14,   6,   7,   8,   9,   0, LBRC,
+             FN3,   B,   A,   S,   G,   V,    Z,
+                    U,SLSH,   Y,   E,   X,    C,
+             FN5,   J,   M,COMM, DOT,MINS, RSFT,
+                        F9, F10, F11, F12, RCTL,
+          F7, F8,
+        LCTL,
+        RGUI, NUHS, SPC
+    ),
+
+
+    /* Keymap 3:
+     *
      * poor man’s Neo2
      *
-     * FIXXME: description
+     * For the rare occasions when you have to work on a computer that has no
+     * way of installing Neo2 in the OS, you can make do with this layer and
+     * QWERTZ configured on the computer. That as close as possible resembles
+     * Neo2. Of course, the Shift layer still is as it is in QWERTZ and Neo2
+     * Layer3 is not possible¹. Layer 4 is again implemented in hardware as far
+     * as possible.
+     *
+     * ¹ Pull requests welcome.
      *
      * ,--------------------------------------------------.           ,--------------------------------------------------.
      * |  Esc   |   1  |   2  |   3  |   4  |   5  | F13  |           | F14  |   6  |   7  |   8  |   9  |   0  |   -    |
@@ -132,7 +199,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
      * |  Del   |   U  |   I  |   A  |   E  |   O  |------|           |------|   S  |   N  |   R  |   T  |   D  |   Y    |
      * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-     * |   <    |   Ü  |   Ö  |   Ä  |   P  |   Z  | RET  |           |  L4  |   B  |   M  |   ,  |   .  |   J  |  T1    |
+     * |   <    |   Ü  |   Ö  |   Ä  |   P  |   Z  | RET  |           |  L5  |   B  |   M  |   ,  |   .  |   J  |   #    |
      * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
      *   | Prnt |  F1  |  F2  |  F3  |  F4  |                                       |  F9  |  F10 |  F11 | F12  |  T3  |
      *   `----------------------------------'                                       `----------------------------------'
@@ -140,7 +207,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                                        |  F5  |  F6  |       |  F7  |  F8  |
      *                                 ,------|------|------|       |------+------+------.
      *                                 |      |      | LAlt |       | RCtrl|      |      |
-     *                                 | LSft |  M4l |------|       |------|   #  | Space|
+     *                                 | LSft |  L4  |------|       |------| RAlt | Space|
      *                                 |      |      | LGui |       | RGui |      |      |
      *                                 `--------------------'       `--------------------'
      */
@@ -151,22 +218,22 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         TRNS,   X,   V,   L,   C,   W,TRNS,
         TRNS,   U,   I,   A,   E,   O,
         NUBS,LBRC,SCLN,QUOT,   P,   Y,TRNS,
-        TRNS,TRNS,TRNS,TRNS,TRNS,
+        PSCR,TRNS,TRNS,TRNS,TRNS,
                                       LSFT,TRNS,
                                            TRNS,
-                                 TRNS, FN2,TRNS,
+                                 LSFT, FN4,TRNS,
         // right hand
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,SLSH,
-              FN4,   K,   H,   G,   F,   Q,MINS,
+              FN0,   K,   H,   G,   F,   Q,MINS,
                      S,   N,   R,   T,   D,   Z,
-             TRNS,   B,   M,COMM, DOT,   J, GRV,
+             TRNS,   B,   M,COMM, DOT,   J,NUHS,
                        TRNS,TRNS,TRNS,TRNS, EQL,
         TRNS,TRNS,
         TRNS,
-        TRNS,TRNS,TRNS
+        TRNS,RALT,TRNS
     ),
 
-    /* Keymap 3:
+    /* Keymap 4:
      *
      * hardware Neo2 layer 4
      *
@@ -199,7 +266,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           NO,  NO,  NO,  NO,  NO,
                                         NO,  NO,
                                            TRNS,
-                                 TRNS, FN2,TRNS,
+                                 TRNS,TRNS,TRNS,
         // right hand
                NO,  NO,  NO,  NO,  NO,  NO,  NO,
                NO,  NO,   7,   8,   9,RBRC,MINS,
@@ -208,10 +275,10 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                          NO,  NO,  NO,  NO,  NO,
           NO,  NO,
         TRNS,
-        TRNS,  NO,KP_0
+        TRNS,  NO,   0
     ),
 
-    /* Keymap 4:
+    /* Keymap 5:
      *
      * special keys
      *
@@ -237,19 +304,19 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     KEYMAP(
         // left hand
-         PWR,  NO,  NO,  NO,  NO,  NO, FN0,
+         PWR,  NO,  NO,  NO,  NO,  NO,FN10,
           NO,  NO,  NO,  NO,  NO,  NO,  NO,
           NO,  NO,  NO,  NO,  NO,  NO,
-          NO,  NO,  NO,  NO,  NO,  NO, FN1,
+          NO,  NO,  NO,  NO,  NO,  NO,FN11,
           NO,  NO,  NO,  NO,  NO,
                                         NO,  NO,
                                              NO,
                                    NO,  NO,  NO,
         // right hand
-               NO,  NO,  NO,  NO,  NO,  NO, FN0,
+               NO,  NO,  NO,  NO,  NO,  NO,FN10,
               INS,VOLU, APP,  NO,  NO,  NO,  NO,
                   MUTE,MPRV,MPLY,MNXT,MSTP,  NO,
-              FN3,VOLD,  NO,  NO,  NO,  NO,  NO,
+             TRNS,VOLD,  NO,  NO,  NO,  NO,  NO,
                          NO,  NO,  NO,  NO,  NO,
           NO,  NO,
           NO,
@@ -263,6 +330,7 @@ enum function_id {
     LAYER0,
     LAYER1,
     LAYER2,
+    LAYER3,
 };
 
 enum macro_id {
@@ -273,13 +341,14 @@ enum macro_id {
  * Fn action definition
  */
 static const uint16_t PROGMEM fn_actions[] = {
-    ACTION_FUNCTION(TEENSY_KEY),                    // FN0 - Teensy key
-    ACTION_MACRO(KVM_SWITCH),                       // FN1 - KVM switch macro
-    ACTION_LAYER_MOMENTARY(3),                      // FN2 - toggle Layer3
-    ACTION_LAYER_MOMENTARY(4),                      // FN3 - toggle Layer4
-    ACTION_FUNCTION(LAYER0),                        // FN4 - switch to Layer0
-    ACTION_FUNCTION(LAYER1),                        // FN5 - switch to Layer1
-    ACTION_FUNCTION(LAYER2),                        // FN6 - switch to Layer2
+    [0] = ACTION_FUNCTION(LAYER0),
+    [1] = ACTION_FUNCTION(LAYER1),
+    [2] = ACTION_FUNCTION(LAYER2),
+    [3] = ACTION_FUNCTION(LAYER3),
+    [4] = ACTION_LAYER_MOMENTARY(4),
+    [5] = ACTION_LAYER_MOMENTARY(5),
+    [10] = ACTION_FUNCTION(TEENSY_KEY),
+    [11] = ACTION_MACRO(KVM_SWITCH),
 };
 
 void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
@@ -311,6 +380,13 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
             ergodox_right_led_3_on();
             // layer 2
             layer_on(2);
+        } else if (id == LAYER3) {
+            // leds 2 and3 on
+            ergodox_led_all_off();
+            ergodox_right_led_2_on();
+            ergodox_right_led_3_on();
+            // layer 3
+            layer_on(3);
         }
     }
 }
@@ -322,6 +398,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
 
     switch (id) {
         case KVM_SWITCH:
+        default:
             return (event.pressed ?
                     MACRO( I(50), T(LCTRL), T(LCTRL), W(255), W(255), T(ENTER), END) : MACRO_NONE);
             break;
