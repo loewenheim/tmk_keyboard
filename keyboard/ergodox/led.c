@@ -33,19 +33,19 @@ void led_set(uint8_t usb_led)
         ergodox_right_led_1_off();
     }
 
-    // For some reason, these won’t work
-    // middle - CapsLock
-    if (layer_state &= 1 << 1) {
-        ergodox_right_led_2_on();
-    } else {
-        ergodox_right_led_2_off();
-    }
-
-    // bottommost - ScrollLock
-    if (layer_state &= 1 << 2) {
-        ergodox_right_led_3_on();
-    } else {
-        ergodox_right_led_3_off();
-    }
+    /* // For some reason, these won’t work */
+    /* // middle - CapsLock */
+    /* if (layer_state &= 1 << 1) { */
+    /*     ergodox_right_led_2_on(); */
+    /* } else { */
+    /*     ergodox_right_led_2_off(); */
+    /* } */
+    /*  */
+    /* // bottommost - ScrollLock */
+    /* if (layer_state &= 1 << 2) { */
+    /*     ergodox_right_led_3_on(); */
+    /* } else { */
+    /*     ergodox_right_led_3_off(); */
+    /* } */
 }
 
