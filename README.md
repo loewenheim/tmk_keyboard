@@ -105,6 +105,7 @@ You can find the blobs for the latest stable version under
 Building from Source
 --------------------
 
+0. Do the prerequisite stuff in the [build doc](doc/build.md).
 1. `git clone https://github.com/kaimi/tmk_keyboard`.
 2. `cd tmk_keyboard/keyboard/ergodox`.
 3. `make neo`.
